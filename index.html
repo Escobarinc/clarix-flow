@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clarix Flow – české diktování pro Mac</title>
+<meta name="description" content="Podržte fn, mluvte česky a text se sám vloží kamkoliv. Zdarma, soukromě, bez internetu.">
+<link rel="icon" href="img/favicon.png">
+<style>
+  :root {
+    --bg: #03060d; --panel: #0a1222cc; --line: #ffffff14; --text: #f5f7fc; --muted: #9aa9c0;
+    --blue: #3ea0ff; --gold: #f6b23e; --gold-2: #ffcf6a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--text); overflow-x: hidden;
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    background:
+      radial-gradient(900px 600px at 80% 0%, #0b3e7b66, transparent 60%),
+      radial-gradient(700px 500px at 5% 30%, #7a4f0b2e, transparent 60%),
+      var(--bg);
+  }
+  a { color: var(--gold); }
+  img { max-width: 100%; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
+
+  /* Nav */
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+  .nav .logo { height: 50px; width: auto; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800;
+    background: linear-gradient(180deg, var(--gold-2), var(--gold)); color: #1b1203;
+    border-radius: 14px; box-shadow: 0 10px 36px #f6b23e40, inset 0 1px #fff7;
+    transition: transform .15s, filter .15s;
+  }
+  .btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+  .btn svg { width: 20px; height: 20px; }
+  .btn.sm { font-size: 15px; padding: 10px 18px; white-space: nowrap; }
+  .btn.lg { font-size: 19px; padding: 17px 32px; }
+
+  /* Hero */
+  .hero { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 30px; padding: 40px 0 0; }
+  .eyebrow { color: var(--gold); letter-spacing: .22em; font-size: 12px; font-weight: 800; }
+  h1 { font-size: clamp(40px, 6vw, 66px); line-height: 1.02; letter-spacing: -.035em; margin: 14px 0 18px; }
+  h1 em { font-style: normal; background: linear-gradient(90deg, var(--blue), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { color: var(--muted); font-size: 19px; max-width: 520px; margin: 0 0 30px; }
+  kbd { display: inline-block; border: 1px solid #ffffff30; background: #ffffff10; border-radius: 7px; padding: 0 8px; font: 600 15px ui-monospace, Menlo, monospace; color: var(--text); }
+  .meta { color: var(--muted); font-size: 14px; margin-top: 14px; }
+  .hero-art { position: relative; text-align: center; }
+  .hero-art img { width: min(500px, 100%); filter: drop-shadow(0 30px 80px #1685fa55); animation: float 6s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-12px); } }
+  .wave { display: block; width: 110%; max-width: none; margin: 10px 0 0 -5%; opacity: .95; pointer-events: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+
+  /* Sections */
+  section { padding: 70px 0 10px; }
+  h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -.025em; margin: 0 0 10px; text-align: center; }
+  .sub { color: var(--muted); text-align: center; margin: 0 auto 38px; max-width: 560px; }
+
+  .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .how div { text-align: center; padding: 10px; }
+  .how img { height: 92px; width: auto; }
+  .how b { display: block; font-size: 20px; margin-top: 10px; }
+  .how span { color: var(--muted); font-size: 15px; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 22px; backdrop-filter: blur(8px); }
+  .card img { width: 58px; height: auto; display: block; margin-bottom: 12px; }
+  .card h3 { margin: 0 0 4px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .stat { font-size: 30px; font-weight: 800; line-height: 1; color: var(--gold); margin-bottom: 6px; }
+
+  .bars { display: block; width: 100%; max-width: 760px; margin: 44px auto 0; opacity: .95; }
+  ol { list-style: none; counter-reset: s; padding: 0; margin: 0 auto; max-width: 720px; display: grid; gap: 12px; }
+  li { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px 18px 70px; position: relative; }
+  li::before {
+    content: counter(s); position: absolute; left: 18px; top: 16px; width: 34px; height: 34px; border-radius: 50%;
+    display: grid; place-items: center; color: #1b1203; font-weight: 800;
+    background: linear-gradient(180deg, var(--gold-2), var(--gold));
+  }
+  li span { color: var(--muted); font-size: 15px; display: block; margin-top: 2px; }
+  li span b { color: var(--text); }
+
+  .cta {
+    margin: 80px 0 0; border-radius: 26px; overflow: hidden; position: relative; text-align: center;
+    padding: 64px 24px; border: 1px solid #3ea0ff33;
+    background: url(img/wave-panel.png) center / cover no-repeat, #06101f;
+  }
+  .cta h2 { margin-bottom: 8px; }
+  .cta p { color: #c6d2e4; margin: 0 0 26px; }
+  .help { color: var(--muted); font-size: 15px; text-align: center; margin: 26px 0 0; }
+  footer { color: #6b7a91; font-size: 13px; text-align: center; padding: 50px 0 40px; line-height: 1.6; }
+  footer a { color: #8fa3bf; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .lead { margin-left: auto; margin-right: auto; }
+    .hero-art { order: -1; } .hero-art img { width: 280px; }
+    .features { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .how, .features { grid-template-columns: 1fr; }
+    .nav .logo { height: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <img class="logo" src="img/pill.png" alt="Clarix Flow">
+    <a class="btn sm" href="#stahnout">Stáhnout zdarma</a>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">ČESKÉ DIKTOVÁNÍ PRO MAC</div>
+      <h1>Mluvte česky.<br><em>Pište kdekoliv.</em></h1>
+      <p class="lead">Podržte <kbd>fn</kbd>, mluvte a pusťte. Text se sám vloží do e-mailu, WhatsAppu, Wordu nebo prohlížeče – přesně tam, kde máte kurzor.</p>
+      <a class="btn lg" id="stahnout" href="https://github.com/Escobarinc/clarix-flow/releases/latest/download/Clarix-Flow.dmg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+        Stáhnout pro Mac
+      </a>
+      <div class="meta">Zdarma · Mac s čipem M1 a novějším · funguje bez internetu</div>
+    </div>
+    <div class="hero-art"><img src="img/logo-c.png" alt=""></div>
+  </header>
+</div>
+
+<img class="wave" src="img/wave.png" alt="">
+
+<div class="wrap">
+  <section>
+    <h2>Tři pohyby a máte hotovo</h2>
+    <p class="sub">Žádné přepínání oken, žádné kopírování. Funguje v každé aplikaci.</p>
+    <div class="how">
+      <div><img src="img/btn-mic.png" alt=""><b>Podržte fn</b><span>kdekoliv, kde píšete</span></div>
+      <div><img src="img/btn-wave.png" alt=""><b>Mluvte</b><span>normálně, česky</span></div>
+      <div><img src="img/btn-play.png" alt=""><b>Pusťte</b><span>a text je na místě</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Proč Clarix Flow</h2>
+    <p class="sub">Postaveno pro češtinu. Běží přímo ve vašem Macu.</p>
+    <div class="features">
+      <div class="card"><img src="img/i-signal.png" alt=""><div class="stat">4,5×</div><h3>méně chyb v češtině</h3><p>Model NVIDIA Canary rozumí češtině výrazně lépe než běžné diktování.</p></div>
+      <div class="card"><img src="img/i-shield.png" alt=""><div class="stat">100 %</div><h3>soukromé</h3><p>Hlas se nikam neposílá. Funguje i úplně bez internetu.</p></div>
+      <div class="card"><img src="img/i-bolt.png" alt=""><div class="stat">pár vteřin</div><h3>a text je tam</h3><p>Rychlé i na MacBooku Air. Interpunkci a velká písmena píše samo.</p></div>
+      <div class="card"><img src="img/i-layers.png" alt=""><h3>Poznámky a schůzky</h3><p>Diktujte do poznámek nebo nahrajte celou schůzku – dostanete její přepis.</p></div>
+      <div class="card"><img src="img/i-gear.png" alt=""><h3>Váš slovník</h3><p>Jména, firmy a pojmy napíše přesně tak, jak chcete.</p></div>
+      <div class="card"><img src="img/i-users.png" alt=""><h3>Pro celý tým</h3><p>Stáhnout si ho může každý kolega s Macem. Zdarma, bez účtu.</p></div>
+    </div>
+  </section>
+
+  <img class="bars" src="img/bars.png" alt="">
+
+  <section>
+    <h2>Instalace ve 3 krocích</h2>
+    <p class="sub">Zabere asi 2 minuty.</p>
+    <ol>
+      <li><b>Otevřete stažený soubor a přetáhněte Clarix Flow do Aplikací.</b></li>
+      <li><b>Spusťte Clarix Flow.</b>
+        <span>Když Mac napíše „nelze ověřit“: klikněte na Hotovo → Nastavení systému → Soukromí a zabezpečení → dole <b>Přesto otevřít</b>.</span></li>
+      <li><b>Projděte průvodce v aplikaci.</b>
+        <span>Povolí mikrofon a vkládání textu. Pak už jen podržíte <b>fn</b> a mluvíte.</span></li>
+    </ol>
+    <p class="help">Nefunguje to? Ukončete aplikaci (ikona nahoře v liště) a spusťte ji znovu. Nebo napište na <a href="mailto:info@clarix.cz">info@clarix.cz</a>.</p>
+  </section>
+
+  <div class="cta">
+    <h2>Zkuste to ještě dnes</h2>
+    <p>Zdarma pro Mac s čipem M1 a novějším.</p>
+    <a class="btn lg" href="https://github.com/Escobarinc/clarix-flow/releases/latest/download/Clarix-Flow.dmg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+      Stáhnout pro Mac
+    </a>
+  </div>
+
+  <footer>Clarix Flow · © 2026 Milan Zedníček · <a href="mailto:info@clarix.cz">info@clarix.cz</a><br>Postaveno na <a href="https://github.com/cjpais/Handy">Handy</a> (MIT, © 2025 CJ Pais) · hlasový model NVIDIA Canary 1B v2 (CC BY 4.0)</footer>
+</div>
+</body>
+</html>
